@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: lightgray;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: navy;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px gray;
+      width: 400px;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid gray;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background: lightblue;
+    }
+
+    button {
+      background-color: blue;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: darkblue;
+    }
+
+    .transcript {
+      margin-top: 15px;
+      background: whitesmoke;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    input {
+      padding: 8px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid gray;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Student Management System</h1>
+
+  <div class="container">
+    <h3>Student List</h3>
+    <table id="studentTable">
+      <tr>
+        <th>Name</th>
+        <th>ID</th>
+        <th>Level</th>
+      </tr>
+    </table>
+
+    <button onclick="showTranscript()">Show Transcript</button>
+    <button onclick="addStudent()">Add Student</button>
+    <button onclick="deleteStudent()">Delete Student</button>
+
+    <div id="transcriptContainer" class="transcript"></div>
+  </div>
+
+  <script>
+    // Initial array of students
+    let students = [
+      { name: "Ali Ahmed", id: "22101010", level: "1" },
+      { name: "Sara Mohamed", id: "22101012", level: "2" },
+      { name: "Omar Hassan", id: "22101013", level: "3" },
+      { name: "Mona Tarek", id: "22101014", level: "2" },
+      { name: "Khaled Mostafa", id: "22101015", level: "4" }
+    ];
+
+    // Display initial student table
+    function displayStudents() {
+      const table = document.getElementById("studentTable");
+      // Reset table header
+      table.innerHTML = `
+        <tr>
+          <th>Name</th>
+          <th>ID</th>
+          <th>Level</th>
+        </tr>
+      `;
+      students.forEach(s => {
+        const row = `<tr><td>${s.name}</td><td>${s.id}</td><td>${s.level}</td></tr>`;
+        table.innerHTML += row;
+      });
+    }
+
+    displayStudents();
+
+    // Show transcript for all students
+    function showTranscript() {
+      const transcriptContainer = document.getElementById("transcriptContainer");
+      transcriptContainer.innerHTML = "";
+
+      students.forEach(student => {
+        transcriptContainer.innerHTML += `
+          <h4>Transcript for ${student.name} (ID: ${student.id})</h4>
+          <table>
+            <tr><th>Subject</th><th>Degree</th></tr>
+            <tr><td>Math</td><td>${Math.floor(Math.random() * 100)}</td></tr>
+            <tr><td>Programming</td><td>${Math.floor(Math.random() * 100)}</td></tr>
+            <tr><td>AI</td><td>${Math.floor(Math.random() * 100)}</td></tr>
+            <tr><td>Data Structures</td><td>${Math.floor(Math.random() * 100)}</td></tr>
+            <tr><td>Statistics</td><td>${Math.floor(Math.random() * 100)}</td></tr>
+          </table>
+          <br>
+        `;
+      });
+    }
+
+    // Add a new student
+    function addStudent() {
+      const name = prompt("Enter student name:");
+      const id = prompt("Enter student ID:");
+      const level = prompt("Enter student level (1-4):");
+
+      if (name && id && level) {
+        students.push({ name, id, level });
+        displayStudents();
+        alert("Student added successfully!");
+      } else {
+        alert("Please provide all details.");
+      }
+    }
+
+    // Delete a student by ID
+    function deleteStudent() {
+      const id = prompt("Enter the ID of the student to delete:");
+      const index = students.findIndex(s => s.id === id);
+
+      if (index !== -1) {
+        students.splice(index, 1);
+        displayStudents();
+        alert("Student deleted successfully!");
+      } else {
+        alert("Student not found!");
+      }
+    }
+  </script>
+
+</body>
+</html>
